@@ -1,4 +1,3 @@
-// app/client.tsx
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -51,7 +50,7 @@ export default function Client({ initialData }: ClientProps) {
 
   // Obtener la hora local de la ciudad seleccionada
   const cityTime = new Date().toLocaleTimeString("es-AR", {
-    timeZone: selectedCity.timeZone, // Asegúrate de tener el campo timeZone en tu lista de ciudades
+    timeZone: selectedCity.timeZone,
     hour: "2-digit",
     hour12: false,
   });
@@ -60,24 +59,23 @@ export default function Client({ initialData }: ClientProps) {
   const isDayTime = hour >= 6 && hour < 18;
 
   return (
-    <div className={`pt-14 h-screen bg-cover bg-center  ${
+    <div className={`pt-14 h-screen bg-cover bg-center ${
         isDayTime ? 'bg-[#245dd992]' : 'bg-[#102C54]'
-      } `}>
+      }`}>
 
-
-      <div className={`w-[40%]  mx-auto bg-cover bg-center border border-white rounded-lg p-6 ${
+      <div className={`w-full max-w-lg mx-auto bg-cover bg-center border border-white rounded-lg p-4 md:p-6 ${
         isDayTime ? 'bg-[url("/image/dia2.jpg")]' : 'bg-[url("/image/noche2.jpg")]'
       } bg-opacity-40`}>
 
         <div className="bg-black bg-opacity-60 p-4 rounded-lg">
 
-        <h1 className="text-center text-white text-2xl pb-4">Clima Actual</h1>
+        <h1 className="text-center text-white text-xl md:text-2xl pb-4">Clima Actual</h1>
 
-        <div className="flex items-center justify-center mb-4 ">
-          <h2 className="pr-4 py-2 text-white">Seleccione una provincia: </h2>
-          <select onChange={handleCityChange} value={selectedCity.name} className="bg-gray-700 text-white border border-gray-600 rounded px-2 py-1">
+        <div className="flex flex-col sm:flex-row items-center justify-center mb-4">
+          <h2 className="text-white text-sm sm:text-base pr-4 py-2">Seleccione una provincia:</h2>
+          <select onChange={handleCityChange} value={selectedCity.name} className="bg-gray-700 text-white border border-gray-600 rounded px-2 py-1 text-sm sm:text-base">
             {cities.map((city) => (
-                <option key={city.name} value={city.name}>
+              <option key={city.name} value={city.name}>
                 {city.name}
               </option>
             ))}
@@ -87,32 +85,32 @@ export default function Client({ initialData }: ClientProps) {
         {errorMessage && <div className="text-red-500 text-center mb-4">{errorMessage}</div>}
 
         {forecastData && (
-            <div className="">
-            <h2 className="text-center text-white text-xl mb-4">
+          <div>
+            <h2 className="text-center text-white text-lg md:text-xl mb-4">
               {selectedCity.name} {formatTemperature(latestWeather?.temperature ?? null)}°C
             </h2>
 
             <div className="flex items-center justify-center py-4">
               <p className="text-center text-white">
                 {isDayTime ? (
-                  <FaSun className="text-yellow-500 text-4xl" />
+                  <FaSun className="text-yellow-500 text-3xl sm:text-4xl" />
                 ) : (
-                    <IoMoonSharp className="text-blue-500 text-4xl" />
+                  <IoMoonSharp className="text-blue-500 text-3xl sm:text-4xl" />
                 )}
               </p>
             </div>
 
             {dailyWeather && (
-                <div className="flex items-center justify-around py-4 text-white">
-                <p >{formatTemperature(dailyWeather.temperatureMax)}°C</p>
-                <p className="px-3 text-gray-400">{formatTemperature(dailyWeather.temperatureMin)}°C</p>
+              <div className="flex flex-col sm:flex-row items-center justify-around py-4 text-white">
+                <p className="text-lg">{formatTemperature(dailyWeather.temperatureMax)}°C</p>
+                <p className="text-lg px-3 text-gray-400">{formatTemperature(dailyWeather.temperatureMin)}°C</p>
               </div>
             )}
-            <div className="grid grid-cols-2 gap-4 py-4 text-white">
+            <div className="grid  md:grid-cols-2 grid-cols-1 mx-auto gap-4 py-4 text-white text-sm sm:text-base">
               <p>Sensación Térmica: {latestWeather?.temperatureApparent}°C</p>
               <p>Humedad: {latestWeather?.humidity}%</p>
-              <p className="text-[15px]">Velocidad del Viento: {latestWeather?.windSpeed} km/h</p>
-              <p className="text-[15px]">Cobertura de Nubes: {latestWeather?.cloudCover}%</p>
+              <p className="text-xs sm:text-sm">Velocidad del Viento: {latestWeather?.windSpeed} km/h</p>
+              <p className="text-xs sm:text-sm">Cobertura de Nubes: {latestWeather?.cloudCover}%</p>
               {/* <p>Presión: {latestWeather?.pressureSurfaceLevel} hPa</p> */}
               {/* <p>Visibilidad: {latestWeather?.visibility} km</p> */}
             </div>
