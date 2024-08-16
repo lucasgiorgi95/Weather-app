@@ -31,16 +31,4 @@ export const cities: City[] = [
   { name: 'La Rioja', latitude: -29.4131, longitude: -66.8600, timeZone: 'America/Argentina/La_Rioja' },
   { name: 'Corrientes', latitude: -27.4790, longitude: -58.8294, timeZone: 'America/Argentina/Cordoba' },
   
-
-   // Ciudades de otros países
-  //  { name: 'New York', latitude: 40.7128, longitude: -74.0060, timeZone: 'America/New_York' },
-  //  { name: 'Los Angeles', latitude: 34.0522, longitude: -118.2437, timeZone: 'America/Los_Angeles' },
-  //  { name: 'London', latitude: 51.5074, longitude: -0.1278, timeZone: 'Europe/London' },
-  //  { name: 'Paris', latitude: 48.8566, longitude: 2.3522, timeZone: 'Europe/Paris' },
-  //  { name: 'Tokyo', latitude: 35.6895, longitude: 139.6917, timeZone: 'Asia/Tokyo' },
-  //  { name: 'Sydney', latitude: -33.8688, longitude: 151.2093, timeZone: 'Australia/Sydney' },
-  //  { name: 'Cairo', latitude: 30.0444, longitude: 31.2357, timeZone: 'Africa/Cairo' },
-  //  { name: 'Moscow', latitude: 55.7558, longitude: 37.6173, timeZone: 'Europe/Moscow' },
-  //  { name: 'Beijing', latitude: 39.9042, longitude: 116.4074, timeZone: 'Asia/Shanghai' },
-  //  { name: 'Mexico City', latitude: 19.4326, longitude: -99.1332, timeZone: 'America/Mexico_City' },
 ];
