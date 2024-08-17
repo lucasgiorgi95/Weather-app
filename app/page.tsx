@@ -3,6 +3,7 @@ import React from 'react';
 import { getWeatherData } from '@/components/Server'; 
 import Client from '@/components/Client';
 import { ForecastResponse } from '@/types/types';
+import 'leaflet/dist/leaflet.css';
 
 
 interface PageProps {

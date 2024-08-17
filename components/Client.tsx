@@ -58,20 +58,18 @@ export default function Client({ initialData }: ClientProps) {
   const isDayTime = hour >= 6 && hour < 18;
 
   // Función para seleccionar el icono adecuado basado en las condiciones
-  const getWeatherIcon = (weatherCode: number) => {
-    if (weatherCode >= 200 && weatherCode < 300) return <IoMdRainy className="text-blue-400 text-4xl" />;
-    if (weatherCode >= 300 && weatherCode < 400) return <IoMdRainy className="text-gray-600 text-4xl" />;
-    if (weatherCode >= 500 && weatherCode < 600) return <IoMdRainy className="text-blue-500 text-4xl" />;
-    if (weatherCode >= 600 && weatherCode < 700) return <IoMdSnow className="text-white text-4xl" />;
-    if (weatherCode >= 700 && weatherCode < 800) return <IoMdCloudy className="text-gray-500 text-4xl" />;
-    if (weatherCode === 800) return <IoMdSunny className="text-yellow-500 text-4xl" />;
-    if (weatherCode > 800) return <IoMdCloudy className="text-gray-300 text-4xl" />;
-    return <IoMdCloudy className="text-gray-300 text-4xl" />;
-  };
+
+  const dailyWeather = forecastData?.timelines.daily[0]?.values;
+
+  // Filtrar solo los días futuros
+  const today = new Date();
+  const futureWeather = weeklyWeather.filter((day: DailyWeatherData) =>
+    new Date(day.time) >= today
+  );
 
   return (
     <div
-      className={`w-full h-screen mx-auto bg-cover bg-center border border-white rounded-lg p-4  md:p-6 ${
+      className={`w-full h-screen mx-auto bg-cover bg-center border border-white rounded-lg p-4 md:p-6 ${
         isDayTime
           ? 'bg-[url("/image/dia2.jpg")]'
           : 'bg-[url("/image/noche2.jpg")]'
@@ -106,37 +104,40 @@ export default function Client({ initialData }: ClientProps) {
         {forecastData && (
           <div>
             <div className="bg-gray-800 w-[40%] mx-auto rounded-lg p-4 flex flex-col items-center text-white shadow-lg min-w-[200px]">
+              <h2 className="text-center text-white text-4xl font-bold md:text-3xl mb-2">
+                {selectedCity.name}{" "}
+                {formatTemperature(latestWeather?.temperature ?? null)}°C
+              </h2>
 
-            <h2 className="text-center  text-white text-4xl md:text-3xl mb-2">
-              {selectedCity.name}{" "}
-              {formatTemperature(latestWeather?.temperature ?? null)}°C
-            </h2>
+              <div className="">
+                <p className="text-xl font-bold">
+                  {formatTemperature(dailyWeather?.temperatureMax ?? null)}°C
+                </p>
+              </div>
 
-            <div className="flex items-center justify-center py-4">
-              {latestWeather && getWeatherIcon(latestWeather.weatherCode)}
+              <div>
+                <p className="text-lg font-bold text-gray-400">
+                  {formatTemperature(dailyWeather?.temperatureMin ?? null)}°C
+                </p>
+              </div>
             </div>
-            
-            </div>
 
-            <div className="overflow-x-auto  mt-6">
+            <div className="overflow-x-auto mt-6">
               <div className="flex pb-[2rem] space-x-[10px]">
-                {weeklyWeather.map((day: DailyWeatherData, index: number) => (
+                {futureWeather.map((day: DailyWeatherData, index: number) => (
                   <div
                     key={index}
                     className="day-card bg-gray-800 rounded-lg p-4 flex flex-col items-center text-white shadow-lg min-w-[200px]"
                   >
-                    <p className="text-lg font-semibold">
+                    <p className="text-2xl font-semibold">
                       {new Date(day.time).toLocaleDateString("es-AR", {
                         weekday: "long",
                       })}
                     </p>
-                    <div className="icon text-4xl my-3">
-                      {getWeatherIcon(day.values.weatherCode)}
-                    </div>
-                    <p className="text-2xl font-bold">
+                    <p className="text-xl font-bold">
                       {formatTemperature(day.values.temperatureMax)}°C
                     </p>
-                    <p className="text-sm text-gray-400">
+                    <p className="text-base text-gray-400">
                       {formatTemperature(day.values.temperatureMin)}°C
                     </p>
                   </div>
